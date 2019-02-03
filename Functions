@@ -1,0 +1,172 @@
+#include <iostream>
+#include "Functions.h"
+
+using namespace std;
+void createboard(int** board, int m, int n) {
+	for (size_t i = 0; i < m; i++)
+	{
+		for (size_t j = 0; j < n; j++)
+		{
+			board[i][j] = 0;
+
+		}
+	}
+}
+
+
+
+
+void displyboard(int** board, int m, int n) {
+	for (size_t i = 0; i < m; i++)
+	{
+		for (size_t j = 0; j < n; j++)
+		{
+			cout << board[i][j] << '\t';
+
+		}
+		cout << endl;
+	}
+
+	cout << endl;
+}
+
+void getknight(int** board, int m, int n, int x, int y) {
+
+	
+	board[x][y] = 1;
+
+}
+
+
+
+void moveknight(int** board, int m, int n, int &x, int &y,int ** possiblemoves,int bestmove,int &loop) {
+
+	
+	x = possiblemoves[bestmove][0];
+	y = possiblemoves[bestmove][1];
+
+	board[x][y] = ++loop;
+
+
+	displyboard(board, m, n);
+
+
+
+
+}
+
+bool move(int** board, int m, int n, int &x, int &y,int** possiblemoves,int &counter) {
+	counter = 0;
+	
+
+	if (x + 2 < m && y + 1 < n && x + 2 >= 0 && y + 1 >= 0 && board[x + 2][y + 1] == 0) {
+		possiblemoves[counter][0] = x + 2;
+		possiblemoves[counter][1] = y + 1;
+		
+		counter++;
+		
+	}
+	if (x + 2 < m && y - 1 < n && x + 2 >= 0 && y - 1 >= 0 && board[x + 2][y - 1] == 0) {
+		possiblemoves[counter][0] = x + 2;
+		possiblemoves[counter][1] = y - 1;
+		
+		counter++;
+	}
+
+	if (x - 2 < m && y + 1 < n && x - 2 >= 0 && y + 1 >= 0 && board[x - 2][y + 1] == 0) {
+		possiblemoves[counter][0] = x - 2;
+		possiblemoves[counter][1] = y + 1;
+		
+		counter++;
+	}
+	if (x - 2 < m && y - 1 < n && x - 2 >= 0 && y - 1 >= 0 && board[x - 2][y - 1] == 0) {
+		possiblemoves[counter][0] = x - 2;
+		possiblemoves[counter][1] = y - 1;
+		
+		counter++;
+	}
+	if (x + 1 < m && y + 2 < n && x + 1 >= 0 && y + 2 >= 0 && board[x + 1][y + 2] == 0) {
+		possiblemoves[counter][0] = x + 1;
+		possiblemoves[counter][1] = y + 2;
+		
+		counter++;
+	}
+	if (x + 1 < m && y - 2 < n && x + 1 >= 0 && y - 2 >= 0 && board[x + 1][y - 2] == 0) {
+		possiblemoves[counter][0] = x + 1;
+		possiblemoves[counter][1] = y - 2;
+	
+		counter++;
+	}
+	if (x - 1 < m && y - 2 < n && x - 1 >= 0 && y -2 >= 0 && board[x - 1][y - 2] == 0) {
+		possiblemoves[counter][0] = x - 1;
+		possiblemoves[counter][1] = y - 2;
+		
+		counter++;
+	}
+	if (x - 1 < m && y + 2 < n && x - 1 >= 0 && y + 2 >= 0 && board[x - 1][y + 2] == 0) {
+		possiblemoves[counter][0] = x - 1;
+		possiblemoves[counter][1] = y + 2;
+	
+		counter++;
+	}
+
+
+
+	return true;
+}
+
+int determinatebestmove(int**board, int m, int n, int** possiblemoves, int counter)
+{
+	int bestmove = 0;
+	int min = 9;
+	int x, y;
+	int localcount = 0;
+	for (int i = 0; i < counter; i++, localcount = 0) {
+		x = possiblemoves[i][0];
+		y = possiblemoves[i][1];
+
+		if (x + 2 < m && y + 1 < n && x + 2 >= 0 && y + 1 >= 0 && board[x + 2][y + 1] == 0) {
+			
+			localcount++;
+
+		}
+		if (x + 2 < m && y - 1 < n && x + 2 >= 0 && y - 1 >= 0 && board[x + 2][y - 1] == 0) {
+			
+			localcount++;
+		}
+
+		if (x - 2 < m && y + 1 < n && x - 2 >= 0 && y + 1 >= 0 && board[x - 2][y + 1] == 0) {
+			
+			localcount++;
+		}
+		if (x - 2 < m && y - 1 < n && x - 2 >= 0 && y - 1 >= 0 && board[x - 2][y - 1] == 0) {
+			
+			localcount++;
+		}
+		if (x + 1 < m && y + 2 < n && x + 1 >= 0 && y + 2 >= 0 && board[x + 1][y + 2] == 0) {
+			
+			localcount++;
+		}
+		if (x + 1 < m && y - 2 < n && x + 1 >= 0 && y - 2 >= 0 && board[x + 1][y - 2] == 0) {
+			
+			localcount++;
+		}
+		if (x - 1 < m && y - 2 < n && x - 1 >= 0 && y - 2 >= 0 && board[x - 1][y - 2] == 0) {
+			
+			localcount++;
+		}
+		if (x - 1 < m && y + 2 < n && x - 1 >= 0 && y + 2 >= 0 && board[x - 1][y + 2] == 0) {
+			
+			localcount++;
+		}
+
+
+		if (localcount < min) {
+			min = localcount;
+			bestmove = i;
+		}
+	}
+	
+	return bestmove;
+
+}
