@@ -1,0 +1,9 @@
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
+void createboard(int** board, int m, int n);
+void displyboard(int** board, int m, int n);
+void getknight(int** board, int m, int n, int x, int y);
+void moveknight(int** board, int m, int n, int &x, int &y,int**possiblemoves,int bestmove,int& loop);
+bool move(int** board, int m, int n, int &x, int &y,int** possiblemoves,int & counter);
+int determinatebestmove(int**board, int m, int n, int** possiblemoves, int counter);
+#endif
